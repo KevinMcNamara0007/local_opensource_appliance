@@ -1,33 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>LLAM API</title>
-  <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@4.13.1/swagger-ui.css">
+  <title>Conv with MistralAI</title>
 </head>
 <body>
-  <!-- <div id="swagger-ui"></div>
-  <script src="https://unpkg.com/swagger-ui-dist@4.13.1/swagger-ui-bundle.js"></script>
-  <script>
-    window.onload = function() {
-      // Set the URL of the OpenAPI spec
-      const specUrl = "/api-docs";
+    <h1>Conv. with MistralAI</h1>
+    <form id="text-form">
+        <label for="text-input">Enter Text:</label>
+        <input type="text" id="text-input" name="text" required>
+        <label for="model-select">Select Model:</label>
+        <select id="model-select">
+            <option value="mistralAI1">mistralAI1</option>
+            <option value="mistralAI2">mistralAI2</option>
+        </select>
+        <button type="submit">Submit</button>
+    </form>
+    <div id="output"></div>
 
-      // Create the Swagger UI instance
-      const ui = new SwaggerUI({
-        spec: specUrl,
-        dom_id: '#swagger-ui'
-      });
+    <script>
+        document.getElementById('text-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const text = document.getElementById('text-input').value;
+            const model = document.getElementById('model-select').value;
+            const data = { text };
 
-      // Initialize the Swagger UI
-      ui.init();
-    };
-  </script> -->
-<h1> Mistral AI</h1>
-<form action="http://localhost:8080/mistral/process_message" method="post">
-  <label for ="message"> Enter a message: </label><br>
-  <input type="text" id="message" name="message"><br><br>
-  <input type="submit" value="Process">
-</form>
-
+            fetch(`http://localhost:8080/mistral/${model}/process_message `, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                const output = document.getElementById('output');
+                output.innerHTML = `<br><b>Output from ${model}:</b> <br> ${data.result}`;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
 </body>
 </html>
