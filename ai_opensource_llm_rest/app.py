@@ -7,12 +7,11 @@ from flask_restx import Api, Resource, fields
 from flask_cors import CORS
 
 # Instruction model
-model_mistralAI1_gguf = "C:/Users/Vamshi Krishna Gundu/Desktop/Vamshi/LnD/Data_Science/Projects/llm_models/mistral-7b-instruct-v0.1.Q2_K.gguf"
-model_mistralAI2_gguf = "C:/Users/Vamshi Krishna Gundu/Desktop/Vamshi/LnD/Data_Science/Projects/llm_models/mistral-7b-instruct-v0.1.Q2_K.gguf"
-#model = "/Users/loki/Desktop/worksurface/ai_lab/models/zephyr_quantized/zephyr-7b-alpha.Q2_K.gguf"
+model_mistral7b = "/Users/loki/Desktop/worksurface/ai_lab/models/mistral_quantized/mistral-7b-instruct-v0.1.Q2_K.gguf"
+model_zephyr7b = "/Users/loki/Desktop/worksurface/ai_lab/models/zephyr_quantized/zephyr-7b-alpha.Q2_K.gguf"
 
 llm_mistralAI1 = Llama(
-    model_path=model_mistralAI1_gguf,
+    model_path=model_mistral7b,
     n_ctx=8192,
     n_batch=512,
     n_threads=7,
@@ -21,9 +20,8 @@ llm_mistralAI1 = Llama(
     seed=42,
 )
 
-
 llm_mistralAI2 = Llama(
-    model_path=model_mistralAI2_gguf,
+    model_path=model_zephyr7b,
     n_ctx=8192,
     n_batch=512,
     n_threads=7,
@@ -49,14 +47,14 @@ class Model1ProcessMessage(Resource):
         # Parse the input data
         data = request.json
         message = data.get('message', '')
-        
+
         output = llm_mistralAI1(message, echo=True, stream=False, max_tokens=4096)
         print(f"-------- output from mistral: {output['choices'][0]['text']} -------")
 
         return {
             "result": output['choices'][0]['text']
         }
-    
+
 
 @ns.route('/mistralAI2/process_message')
 class Model2ProcessMessage(Resource):
@@ -65,14 +63,14 @@ class Model2ProcessMessage(Resource):
         # Parse the input data
         data = request.json
         message = data.get('message', '')
-        
+
         output = llm_mistralAI2(message, echo=True, stream=False, max_tokens=4096)
         print(f"-------- output from mistral: {output['choices'][0]['text']} -------")
 
         return {
             "result": output['choices'][0]['text']
         }
-    
+
 
 # Start the API server
 if __name__ == "__main__":

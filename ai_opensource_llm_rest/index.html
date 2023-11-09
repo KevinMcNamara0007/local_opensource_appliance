@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Conv with MistralAI</title>
+  <title>OpenSource REST KIT</title>
+  <link rel="stylesheet" href="/Users/loki/Desktop/worksurface/ai_lab/local_opensource_appliance/ai_opensource_llm_rest/style.css">
 </head>
 <body>
-    <h1>Conv. with MistralAI</h1>
+    <h1>REST API to test multiple opensource LLMs</h1>
     <form id="text-form">
         <label for="text-input">Enter Text:</label>
         <input type="text" id="text-input" name="text" required>
@@ -22,7 +23,7 @@
             e.preventDefault();
             const text = document.getElementById('text-input').value;
             const model = document.getElementById('model-select').value;
-            const data = { text };
+            const data = { "message":text };
 
             fetch(`http://localhost:8080/mistral/${model}/process_message `, {
                 method: 'POST',
