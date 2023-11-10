@@ -1,46 +1,66 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>OpenSource REST KIT</title>
-  <link rel="stylesheet" href="/Users/loki/Desktop/worksurface/ai_lab/local_opensource_appliance/ai_opensource_llm_rest/style.css">
+    <title>Text conv with mistral</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="/Users/loki/Desktop/worksurface/ai_lab/local_opensource_appliance/ai_opensource_llm_rest/style.css">
 </head>
 <body>
-    <h1>REST API to test multiple opensource LLMs</h1>
-    <form id="text-form">
-        <label for="text-input">Enter Text:</label>
-        <input type="text" id="text-input" name="text" required>
-        <label for="model-select">Select Model:</label>
-        <select id="model-select">
-            <option value="mistralAI1">mistralAI1</option>
-            <option value="mistralAI2">mistralAI2</option>
-        </select>
-        <button type="submit">Submit</button>
-    </form>
-    <div id="output"></div>
 
-    <script>
-        document.getElementById('text-form').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const text = document.getElementById('text-input').value;
-            const model = document.getElementById('model-select').value;
-            const data = { "message":text };
+<h1>Text conv with mistral</h1>
 
-            fetch(`http://localhost:8080/mistral/${model}/process_message `, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.json())
-            .then(data => {
-                const output = document.getElementById('output');
-                output.innerHTML = `<br><b>Output from ${model}:</b> <br> ${data.result}`;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+<div>
+    <label for="message">Message:</label>
+    <input type="text" id="message" name="message">
+</div>
+
+<div>
+    <label for="model_type">Model type:</label>
+    <select id="model_type" name="model_type">
+        <option value="0">Mistral</option>
+        <option value="1">Zephyr</option>
+        <option value="2">Dolphin</option>
+    </select>
+</div>
+
+<div>
+    <button type="button" id="generate_response">Generate response</button>
+</div>
+
+<div id="response_box"></div>
+
+<script>
+$(document).ready(function() {
+
+    $("#generate_response").click(function() {
+
+        // Get the message and model type from the user input
+        var message = $("#message").val();
+        var model_type = $("#model_type").val();
+
+console.log(message)
+console.log(model_type)
+
+        // Make a POST request to the REST server
+        $.ajax({
+            url: "http://localhost:8080/mistral/process_message?message=" + message + "&model=" + model_type,
+            method: "POST",
+            //data: JSON.stringify({message: message, model: model_type}),
+            contentType: "application/json",
+            success: function(data) {
+
+                // Display the response in the response box
+                $("#response_box").html(data.result);
+            },
+            error: function(error) {
+
+                // Display an error message in the response box
+                $("#response_box").html("Error: " + error.message);
+            }
         });
-    </script>
+    });
+});
+</script>
+
 </body>
 </html>
