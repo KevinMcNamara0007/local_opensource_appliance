@@ -2,6 +2,9 @@ from flask import Flask, request, jsonify, render_template, redirect, url_for
 from flask_restx import Api, Resource, fields
 from flask_cors import CORS
 from llama_cpp import Llama
+from dotenv import load_dotenv,find_dotenv
+
+load_dotenv(find_dotenv('config.env'))
 
 # Model paths
 model_paths = [

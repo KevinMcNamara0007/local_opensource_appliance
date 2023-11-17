@@ -1,8 +1,8 @@
 import io
-import json
+
 import numpy as np
-import requests
 import path
+
 
 class PathChatInterface:
     def __init__(self, model_weight_path):
@@ -38,6 +38,7 @@ class PathChatInterface:
 
             # Write the response to the io stream.
             io_stream.write(response + '\n')
+
 
 if __name__ == '__main__':
     # Get the path to the Path model weight.
