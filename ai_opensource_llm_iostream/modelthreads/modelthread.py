@@ -73,9 +73,9 @@ class ModelThread:
         return output
 
     def chat_completions_fake(self, query: str):
-        output = f'''
-        {self.model_name}
-        My response for {query} is ...
+        output = f'''\
+{self.model_name}
+My response for {query} is ...
         '''
         return output
 
