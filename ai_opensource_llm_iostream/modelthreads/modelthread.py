@@ -8,13 +8,15 @@ class ModelThread:
     def __init__(self, model_name: str, model_path: str):
         self.model_name = model_name
         self.model_path = model_path
+
+        # Setting verbose to False in Llama
         self.llm = Llama(
             model_path=self.model_path,
             n_ctx=8192,
             n_batch=512,
             n_threads=7,
             n_gpu_layers=2,
-            verbose=True,
+            verbose=False,
             seed=42,
         )
 
