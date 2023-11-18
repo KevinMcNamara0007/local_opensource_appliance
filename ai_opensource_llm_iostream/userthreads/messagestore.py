@@ -16,9 +16,9 @@ class MessageStore(Enum):
             '''
 
     MODEL_SET_SUCCESS = '''
-            Preferred Model Set Success!
+            [SUCCESS] Preferred Model Set to {}
             '''
 
     MODEL_SET_FAIL = '''
-            Preferred Model Set Failed!
+            [FAILED] Preferred Model Set to {}
             '''

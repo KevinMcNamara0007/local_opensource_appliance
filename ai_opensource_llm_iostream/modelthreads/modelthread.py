@@ -1,5 +1,3 @@
-import os
-
 from llama_cpp import Llama
 
 
@@ -74,28 +72,16 @@ class ModelThread:
             print(str(e))
         return output
 
+    def chat_completions_fake(self, query: str):
+        output = f'''
+        {self.model_name}
+        My response for {query} is ...
+        '''
+        return output
+
     def get_model_props(self):
         props = {
             "name": self.model_name,
             "path": self.model_path
         }
         return props
-
-
-def test_run():
-    from dotenv import load_dotenv, find_dotenv
-    load_dotenv(find_dotenv('config.env'))
-
-    model_name = "Zephyr"
-    model_path = os.getenv('ZEPHYR_PATH', None)
-    if model_path is None:
-        raise Exception('model path is invalid! Correct path in config.env file')
-    print("model path : ", model_path)
-
-    model = ModelThread(model_name, model_path)
-
-    return
-
-
-if __name__ == '__main__':
-    test_run()

@@ -34,3 +34,14 @@ class UserThread:
             print("[Exception] Occurred")
             print(e)
             return False
+
+    def __str__(self):
+        ans=[
+        ' User Details '.center(35,'-'),
+        self._identifier[0],
+        str(self._identifier[1]),
+        self._chat_model_name,
+        *self._chat_list,
+        ''.center(35,'-')
+        ]
+        return '\n'.join(ans)

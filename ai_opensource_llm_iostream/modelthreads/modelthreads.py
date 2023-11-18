@@ -3,7 +3,7 @@ from typing import Tuple, Optional, List
 
 from dotenv import find_dotenv, dotenv_values
 
-from modelthread import ModelThread
+from modelthreads.modelthread import ModelThread
 
 
 class ModelThreads:
