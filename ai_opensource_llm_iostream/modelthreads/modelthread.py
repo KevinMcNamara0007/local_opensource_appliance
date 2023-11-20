@@ -2,6 +2,13 @@ from llama_cpp import Llama
 
 
 class ModelThread:
+    """
+    Low Level Manager Component for every Model Connection.
+    Attributes:
+        - model_name(str)       : Alias name for model
+        - model_path(str)       : System resolved path of model (based on OS)
+        - llm(Llama)            : Llama Object for given configuration
+    """
 
     def __init__(self, model_name: str, model_path: str):
         self.model_name = model_name
@@ -18,7 +25,12 @@ class ModelThread:
             seed=42,
         )
 
-    def model_response_complete(self, query: str):
+    def model_response_complete(self, query: str) -> dict:
+        """
+        Get Complete Model response object from Model for Query
+        :param query: User Query
+        :return: response as dictionary
+        """
         output = ""
         try:
             output = self.llm(query, echo=True, stream=False, max_tokens=4096)
@@ -28,7 +40,12 @@ class ModelThread:
             print(str(e))
         return output
 
-    def chat_completions_full(self, query: str):
+    def chat_completions_full(self, query: str) -> dict:
+        """
+        Get Complete Model response object from Model for Query
+        :param query: User Query
+        :return: response as dictionary
+        """
         output = ""
         try:
             output = self.llm(query, echo=True, stream=False, max_tokens=4096)
@@ -38,7 +55,12 @@ class ModelThread:
             print(str(e))
         return output
 
-    def model_response(self, query: str):
+    def model_response(self, query: str) -> str:
+        """
+        Get Model response output object from Model for Query
+        :param query: User Query
+        :return: response text
+        """
         output = ""
         try:
             output = self.llm(query, echo=True, stream=False, max_tokens=4096)
@@ -55,7 +77,12 @@ class ModelThread:
             print(str(e))
         return output
 
-    def chat_completions(self, query: str):
+    def chat_completions(self, query: str) -> str:
+        """
+        Get Model response output object from Model for Query
+        :param query: User Query
+        :return: response text
+        """
         output = ""
         try:
             output = self.llm(query, echo=True, stream=False, max_tokens=4096)
@@ -72,7 +99,12 @@ class ModelThread:
             print(str(e))
         return output
 
-    def chat_completions_fake(self, query: str):
+    def chat_completions_fake(self, query: str) -> str:
+        """
+        A fake model response generater for response and flow testing with model details
+        :param query: User Query
+        :return: response string
+        """
         output = f'''\
 {self.model_name}
 My response for {query} is ...

@@ -9,7 +9,7 @@ from userthreads.userthread import UserThread
 
 class UserThreads:
     """
-    Complete Management of Multiple Userthreads
+    Complete Management of Multiple UserThread Objects
 
     Attributes:
         - _user_mapping(dict)           : Mapping of UserIdentifier and UserThread
