@@ -8,21 +8,36 @@ from userthreads.userthread import UserThread
 
 
 class UserThreads:
+    """
+    Complete Management of Multiple Userthreads
+
+    Attributes:
+        - _user_mapping(dict)           : Mapping of UserIdentifier and UserThread
+        - _model_threads(ModelThreads)  : ModelThreads Manager
+    """
 
     def __init__(self):
         self._user_mapping: Optional[dict] = dict()
         self._model_threads: ModelThreads = ModelThreads()
 
     def get_user(self, identifier: Tuple[str, int]) -> UserThread:
+        """
+        For a given Identifier, get the corresponding UserThread
+        :param identifier: Identifier for User/Client
+        :return: UserThread for Identifier
+        """
         if not (identifier in self._user_mapping):
             self._user_mapping[identifier] = UserThread(identifier)
 
         return self._user_mapping[identifier]
 
-    def is_model_change_chat(self):
-        pass
-
-    def chat(self, identifier: Tuple[str, int], message: str):
+    def chat(self, identifier: Tuple[str, int], message: str) -> str:
+        """
+        Get response from a ModelThread for a ClientThread
+        :param identifier: Identifier for User/Client
+        :param message: Message/Prompt from User
+        :return: response text from ModelThread for user
+        """
         user = self.get_user(identifier)
         response = None
         is_model_update_message = message.upper().find('!MODEL') != -1
@@ -46,14 +61,14 @@ class UserThreads:
                 try:
                     user.chat_model_name = find_list[0].upper()
                     msg = MessageStore.MODEL_SET_SUCCESS.value
-                    msg=msg.format(user.chat_model_name)
+                    msg = msg.format(user.chat_model_name)
                     response = textwrap.dedent(msg)
                     response = response.strip()
                     return response
 
                 except Exception as e:
                     msg = MessageStore.MODEL_SET_FAIL.value
-                    msg=msg.format(user.chat_model_name)
+                    msg = msg.format(user.chat_model_name)
                     response = textwrap.dedent(msg)
                     response = response.strip()
                     print(str(e))
