@@ -37,7 +37,7 @@ class ModelThreads:
         """
         return self._model_details_dict
 
-    def _isvalid_model_name(self, name) -> Tuple(bool, str):
+    def _isvalid_model_name(self, name) -> Tuple[bool, Optional[str]]:
         """
         Checks if provided model name matches(case-insensitive) with any name in _model_names
         :param name: model name to search
