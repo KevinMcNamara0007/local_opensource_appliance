@@ -55,7 +55,7 @@ class ModelThreads:
         Creat a new knowledge state for ModelThreads object if not already present,refresh state otherwise
         :return: None
         """
-        res = dotenv_values(find_dotenv('models.env'))
+        res = dotenv_values(find_dotenv('appliance.env'))
         base_path = res.get('BASE_PATH', None)
         if not base_path:
             raise Exception('[ENV] BASE_PATH for models folder not defined in environment')
