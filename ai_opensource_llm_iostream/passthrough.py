@@ -12,6 +12,11 @@ try:
     obj = ModelThread("test", path)
     print("[Load Success] ModelThread Loaded")
     res = obj.chat_completions(sample_question)
+    print("[Response Success] Received Response from Model")
+    print("<=== Chat ===>")
+    print(" | Question | ".center(30,"-"))
+    print(sample_question)
+    print(" | Model Reponse | ".center(30,"-"))
     print(res)
 
 except Exception as e:
