@@ -165,3 +165,5 @@ models
 
 *.ipynb
 runner.py
+
+model_files
