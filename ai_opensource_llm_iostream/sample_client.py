@@ -12,7 +12,7 @@ CLIENT_IP = socket.gethostbyname(socket.gethostname())
 CLIENT_PORT = None
 CLIENT_ADDR = tuple()
 
-DISCONNECT_MESSAGE = '!DISCONNECT'
+DISCONNECT_MESSAGE = '!QUIT'
 
 
 def set_port():
@@ -39,14 +39,14 @@ def send(msg:str):
     send_length += b' ' * (HEADER - len(send_length))
     client.send(send_length)
     client.send(message)
-    if not (msg.strip().upper() == 'QUIT'):
+    if not (msg.strip().upper() == DISCONNECT_MESSAGE):
         print(client.recv(2048).decode(FORMAT))
 
 
 while True:
     msg = input('>> ')
     send(msg)
-    if msg.strip().upper() == 'QUIT':
+    if msg.strip().upper() == DISCONNECT_MESSAGE:
         break
 
 

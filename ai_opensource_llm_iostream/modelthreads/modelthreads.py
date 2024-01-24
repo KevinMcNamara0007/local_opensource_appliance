@@ -37,7 +37,7 @@ class ModelThreads:
         """
         return self._model_details_dict
 
-    def _isvalid_model_name(self, name) -> Tuple[bool, str]:
+    def _isvalid_model_name(self, name) -> Tuple[bool, Optional[str]]:
         """
         Checks if provided model name matches(case-insensitive) with any name in _model_names
         :param name: model name to search
@@ -55,7 +55,7 @@ class ModelThreads:
         Creat a new knowledge state for ModelThreads object if not already present,refresh state otherwise
         :return: None
         """
-        res = dotenv_values(find_dotenv('models.env'))
+        res = dotenv_values(find_dotenv('appliance.env'))
         base_path = res.get('BASE_PATH', None)
         if not base_path:
             raise Exception('[ENV] BASE_PATH for models folder not defined in environment')

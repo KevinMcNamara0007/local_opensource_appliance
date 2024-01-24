@@ -1,0 +1,8 @@
+name: appliance
+channels:
+  - defaults
+dependencies:
+  - pip
+  - flask
+  - requests
+prefix: C:\miniconda3\envs\appliance

@@ -1,3 +1,4 @@
+from dotenv import find_dotenv, dotenv_values
 from llama_cpp import Llama
 
 
@@ -14,15 +15,26 @@ class ModelThread:
         self.model_name = model_name
         self.model_path = model_path
 
+        # Original Loader
         # Setting verbose to False in Llama
+        # self.llm = Llama(
+        #     model_path=self.model_path,
+        #     n_ctx=8192,
+        #     n_batch=512,
+        #     n_threads=7,
+        #     n_gpu_layers=2,
+        #     verbose=False,
+        #     seed=42,
+        # )
+
+        # Loader from .env
+        args = dotenv_values(find_dotenv('model_args.env'))
+        for key, value in args.items():
+            args[key] = int(value)
         self.llm = Llama(
             model_path=self.model_path,
-            n_ctx=8192,
-            n_batch=512,
-            n_threads=7,
-            n_gpu_layers=2,
-            verbose=False,
-            seed=42,
+            **args,
+            verbose=False
         )
 
     def model_response_complete(self, query: str) -> dict:

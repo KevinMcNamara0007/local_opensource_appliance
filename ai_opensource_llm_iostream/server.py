@@ -1,8 +1,8 @@
 import socket
 import threading
 from typing import Tuple
-from userthreads.userthreads import UserThreads
 
+from userthreads.userthreads import UserThreads
 
 HEADER = 1024
 FORMAT = 'utf-8'
@@ -16,7 +16,8 @@ server.bind(ADDR)
 
 User_Threads = UserThreads()
 
-def handle_client(conn:socket, addr: Tuple[str,int]):
+
+def handle_client(conn: socket, addr: Tuple[str, int]):
     print(f"[NEW CONN] Address {addr} connected")
 
     connected = True
@@ -32,7 +33,7 @@ def handle_client(conn:socket, addr: Tuple[str,int]):
                     print(f"[{addr}] Disconnecting...")
                     conn.send("Disconnecting...".encode(FORMAT))
                 else:
-                    response = User_Threads.chat(addr,msg)
+                    response = User_Threads.chat(addr, msg)
                     conn.send(response.encode(FORMAT))
         except ConnectionResetError:
             # Handle connection reset error (client forcibly closed the connection)
@@ -41,8 +42,6 @@ def handle_client(conn:socket, addr: Tuple[str,int]):
 
     conn.close()
     print(f"[{addr}] Connection closed.")
-
-
 
 
 def start():
