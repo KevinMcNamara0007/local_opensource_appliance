@@ -76,8 +76,8 @@ class UserThreads:
 
         model_name = user.chat_model_name
         model_thread = self._model_threads.get_modelthread(model_name)
-        response = model_thread.chat_completions_fake(message)
-        # response = model_thread.chat_completions(message)
+        #response = model_thread.chat_completions_fake(message)
+        response = model_thread.chat_completions(message)
         user.append_chat_list(message)
         user.append_chat_list(response)
 
