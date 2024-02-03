@@ -99,8 +99,8 @@ class ModelThread:
         """
         output = ""
         try:
-            print("deb")
-            print(query)
+            # print("deb")
+            # print(query)
             output = self.llm(query, echo=True, stream=False, max_tokens=4096)
         except Exception as e:
             print("[LLM RESPONSE FAIL] Failure in chat completions response from local llm")
@@ -108,8 +108,8 @@ class ModelThread:
             print(str(e))
 
         try:
-            print("deb")
-            print(output)
+            # print("deb")
+            # print(output)
             output = output['choices'][0]['text']
 
         except Exception as e:
