@@ -82,7 +82,9 @@ class ModelThread:
             print(str(e))
 
         try:
-            output = output = output['choices'][0]['text']
+            print("deb")
+            print(output)
+            output = output['choices'][0]['text']
 
         except Exception as e:
             print("[RESPONSE EXTRACT FAIL] Failure in instruct response extraction local llm")
@@ -97,6 +99,8 @@ class ModelThread:
         """
         output = ""
         try:
+            print("deb")
+            print(query)
             output = self.llm(query, echo=True, stream=False, max_tokens=4096)
         except Exception as e:
             print("[LLM RESPONSE FAIL] Failure in chat completions response from local llm")
@@ -104,7 +108,9 @@ class ModelThread:
             print(str(e))
 
         try:
-            output = output = output['choices'][0]['text']
+            print("deb")
+            print(output)
+            output = output['choices'][0]['text']
 
         except Exception as e:
             print("[RESPONSE EXTRACT FAIL] Failure in chat completions response extraction local llm")
@@ -120,6 +126,20 @@ class ModelThread:
         output = f'''\
 {self.model_name}
 My response for {query} is ...
+        '''
+        return output
+
+    def chat_completions_fake_2(self, query: str) -> str:
+        """
+        A fake model response generater for response and flow testing with model details
+        :param query: User Query
+        :return: response string
+        """
+        output = f'''\
+Input to Model:
+{query}
+Output of Model:
+<fake message>
         '''
         return output
 
