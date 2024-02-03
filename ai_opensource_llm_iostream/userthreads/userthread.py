@@ -15,6 +15,10 @@ class UserThread:
         self._identifier = identifier
         self._chat_model_name: Optional[str] = None
         self._chat_list: List[str] = []
+        self.chat_terms: dict = {
+            "User": "Question",
+            "Agent": "Answer"
+        }
 
     @property
     def identifier(self) -> Tuple[str, int]:
@@ -52,19 +56,33 @@ class UserThread:
         """
         return self._chat_list
 
-    def append_chat_list(self, text: str) -> bool:
+    def append_chat_list(self, text: str, msg_type: str) -> bool:
         """
         Append a new chat to existing chat history.
         :param text: new chat to append
+        :param msg_type: Type of chat
         :return: True if append successful,False otherwise
         """
         try:
-            self._chat_list.append(text)
+            formatted = f"{self.chat_terms[msg_type]}: {text}"
+            self._chat_list.append(formatted)
             return True
         except Exception as e:
             print("[Exception] Occurred")
             print(e)
             return False
+
+    def user_message_with_chat_history(self, message: str):
+        current_history = self._chat_list[:]
+        formatted = f'{self.chat_terms.get("User")}: {message}'
+        current_history.append(formatted)
+        formatted = f'{self.chat_terms.get("Agent")}: '
+        current_history.append(formatted)
+        result = "\n".join(current_history)
+        return result
+
+    def clear_chat(self):
+        self._chat_list.clear()
 
     def __str__(self):
         """
