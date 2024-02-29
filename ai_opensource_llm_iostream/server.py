@@ -9,7 +9,7 @@ FORMAT = 'utf-8'
 SERVER = socket.gethostbyname(socket.gethostname())
 PORT = 5050
 ADDR = (SERVER, PORT)
-DISCONNECT_MESSAGE = 'QUIT'
+DISCONNECT_MESSAGE = '!QUIT'
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind(ADDR)

@@ -60,6 +60,7 @@ class UserThreads:
             else:
                 try:
                     user.chat_model_name = find_list[0].upper()
+                    user.clear_chat()
                     msg = MessageStore.MODEL_SET_SUCCESS.value
                     msg = msg.format(user.chat_model_name)
                     response = textwrap.dedent(msg)
@@ -76,9 +77,19 @@ class UserThreads:
 
         model_name = user.chat_model_name
         model_thread = self._model_threads.get_modelthread(model_name)
-        #response = model_thread.chat_completions_fake(message)
-        response = model_thread.chat_completions(message)
-        user.append_chat_list(message)
-        user.append_chat_list(response)
 
-        return response
+        message_original = message
+        # Update message to include chat history
+        message = user.user_message_with_chat_history(message)
+
+        # Fake
+        # response = model_thread.chat_completions_fake_2(message)
+
+        # Actual
+        response = model_thread.chat_completions(message)
+        response_end = response.split(f'{user.chat_terms["Agent"]}:')[-1]
+
+        user.append_chat_list(message_original, "User")
+        user.append_chat_list(response_end, "Agent")
+
+        return response_end

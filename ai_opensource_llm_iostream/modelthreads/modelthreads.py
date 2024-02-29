@@ -1,8 +1,6 @@
 from pathlib import Path
 from typing import Tuple, Optional, List
-
 from dotenv import find_dotenv, dotenv_values
-
 from modelthreads.modelthread import ModelThread
 
 
